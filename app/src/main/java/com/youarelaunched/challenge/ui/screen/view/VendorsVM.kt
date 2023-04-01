@@ -3,6 +3,7 @@ package com.youarelaunched.challenge.ui.screen.view
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.youarelaunched.challenge.data.repository.VendorsRepository
+import com.youarelaunched.challenge.data.repository.model.Vendor
 import com.youarelaunched.challenge.ui.screen.state.VendorsScreenUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,21 +19,38 @@ class VendorsVM @Inject constructor(
 
     private val _uiState = MutableStateFlow(
         VendorsScreenUiState(
-            vendors = null
+            vendors = null,
+            query = null
         )
     )
     val uiState = _uiState.asStateFlow()
 
     init {
-        getVendors()
+        getVendors(_uiState.value.query)
     }
 
-    fun getVendors() {
+    fun getVendors(query: String?) {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
-                    vendors = repository.getVendors()
+                    vendors = repository.getVendors(),
+                    query = query
                 )
+            }
+
+            if (!query.isNullOrBlank()) {
+                val vendorsList: MutableList<Vendor> = mutableListOf()
+                _uiState.value.vendors?.forEach { vendor ->
+                    if (vendor.companyName.contains(query, ignoreCase = true)) {
+                        vendorsList.add(vendor)
+                    }
+                }
+                _uiState.update {
+                    it.copy(
+                        vendors = vendorsList,
+                        query = query
+                    )
+                }
             }
         }
     }

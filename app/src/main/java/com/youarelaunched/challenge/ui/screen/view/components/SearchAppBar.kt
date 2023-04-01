@@ -1,5 +1,7 @@
 package com.youarelaunched.challenge.ui.screen.view.components
 
+import android.os.Looper
+import android.os.Handler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -13,14 +15,14 @@ import com.youarelaunched.challenge.middle.R
 import com.youarelaunched.challenge.ui.theme.Shapes
 import com.youarelaunched.challenge.ui.theme.VendorAppTheme
 
+private const val DELAY_MILLIS = 500L
+private const val LETTERS_TO_AUTO_SEARCH = 2
+
 @Composable
 fun SearchAppBar(
-    modifier: Modifier = Modifier,
-    paddingValues: PaddingValues = PaddingValues(
-        start = 16.dp,
-        top = 24.dp,
-        end = 16.dp
-    )
+    modifier: Modifier = Modifier, paddingValues: PaddingValues = PaddingValues(
+        start = 16.dp, top = 24.dp, end = 16.dp
+    ), clickOnSearch: (String) -> Unit
 ) {
     var textSearchPlaceholder by remember { mutableStateOf("") }
 
@@ -28,10 +30,21 @@ fun SearchAppBar(
         modifier = modifier
             .fillMaxWidth()
             .padding(paddingValues)
-            .shadow(elevation = 14.dp, ambientColor = VendorAppTheme.colors.shadowAmbientColor, shape = Shapes.medium)
+            .shadow(
+                elevation = 14.dp,
+                ambientColor = VendorAppTheme.colors.shadowAmbientColor,
+                shape = Shapes.medium
+            )
             .background(color = VendorAppTheme.colors.buttonUnselected, shape = Shapes.medium),
         value = textSearchPlaceholder,
-        onValueChange = { textSearchPlaceholder = it },
+        onValueChange = {
+            textSearchPlaceholder = it
+            if (textSearchPlaceholder.length > LETTERS_TO_AUTO_SEARCH || textSearchPlaceholder.isBlank()) {
+                Handler(Looper.getMainLooper()).postDelayed(
+                    { clickOnSearch(textSearchPlaceholder) }, DELAY_MILLIS
+                )
+            }
+        },
         placeholder = {
             Text(
                 text = stringResource(id = R.string.search_placeholder),
@@ -39,10 +52,11 @@ fun SearchAppBar(
             )
         },
         trailingIcon = {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_search),
-                contentDescription = null
-            )
+            IconButton(onClick = { clickOnSearch(textSearchPlaceholder) }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_search), contentDescription = null
+                )
+            }
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = VendorAppTheme.colors.buttonUnselected,

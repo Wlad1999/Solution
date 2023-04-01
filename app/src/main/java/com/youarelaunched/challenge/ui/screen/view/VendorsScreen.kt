@@ -28,18 +28,19 @@ fun VendorsRoute(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    VendorsScreen(uiState = uiState)
+    VendorsScreen(uiState = uiState, clickOnSearch = viewModel::getVendors)
 }
 
 @Composable
 fun VendorsScreen(
-    uiState: VendorsScreenUiState
+    uiState: VendorsScreenUiState,
+    clickOnSearch: (String) -> Unit
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         backgroundColor = VendorAppTheme.colors.background,
         snackbarHost = { ChatsumerSnackbar(it) },
-        topBar = { SearchAppBar() }
+        topBar = { SearchAppBar(clickOnSearch = clickOnSearch) }
     ) { paddings ->
         if (!uiState.vendors.isNullOrEmpty()) {
             LazyColumn(
