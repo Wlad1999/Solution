@@ -12,6 +12,7 @@ private val GrayPrimary = Color(0xFF575757)
 private val GraySecondary = Color(0xFF949494)
 private val Background = Color(0xFFFCFCFC)
 private val Green = Color(0xFF55C595)
+private val DarkGreen = Color(0xFF289460)
 
 val LightColorsPalette = VendorAppColors(
     text = GraySecondary,
@@ -21,7 +22,9 @@ val LightColorsPalette = VendorAppColors(
     buttonUnselected = Color.White,
     background = Background,
     chipsBackground = Color.White,
-    snackBarBackground = GrayPrimary
+    snackBarBackground = GrayPrimary,
+    shadowAmbientColor = Color.Black,
+    textGreen = DarkGreen
 )
 
 @Stable
@@ -35,7 +38,10 @@ data class VendorAppColors(
 
     val background: Color,
     val chipsBackground: Color,
-    val snackBarBackground: Color
+    val snackBarBackground: Color,
+
+    val shadowAmbientColor: Color,
+    val textGreen: Color,
 )
 
 internal val LocalVendorAppColors = staticCompositionLocalOf<VendorAppColors> {

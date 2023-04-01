@@ -11,9 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.youarelaunched.challenge.data.repository.model.VendorEmptyItem
+import com.youarelaunched.challenge.middle.R
 import com.youarelaunched.challenge.ui.screen.state.VendorsScreenUiState
 import com.youarelaunched.challenge.ui.screen.view.components.ChatsumerSnackbar
+import com.youarelaunched.challenge.ui.screen.view.components.EmptyItem
+import com.youarelaunched.challenge.ui.screen.view.components.SearchAppBar
 import com.youarelaunched.challenge.ui.screen.view.components.VendorItem
 import com.youarelaunched.challenge.ui.theme.VendorAppTheme
 
@@ -33,7 +38,8 @@ fun VendorsScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         backgroundColor = VendorAppTheme.colors.background,
-        snackbarHost = { ChatsumerSnackbar(it) }
+        snackbarHost = { ChatsumerSnackbar(it) },
+        topBar = { SearchAppBar() }
     ) { paddings ->
         if (!uiState.vendors.isNullOrEmpty()) {
             LazyColumn(
@@ -53,6 +59,22 @@ fun VendorsScreen(
                 }
 
             }
+        } else {
+            EmptyItem(
+                emptyItemsList = listOf(
+                    VendorEmptyItem(
+                        text = stringResource(id = R.string.empty_item_title),
+                        style = VendorAppTheme.typography.h2,
+                        color = VendorAppTheme.colors.textGreen,
+                    ),
+                    VendorEmptyItem(
+                        text = stringResource(id = R.string.empty_item_description),
+                        style = VendorAppTheme.typography.subtitle2,
+                        color = VendorAppTheme.colors.textDark,
+                        paddingValues = PaddingValues(vertical = 8.dp, horizontal = 28.dp)
+                    )
+                )
+            )
         }
     }
 }
