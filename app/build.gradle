@@ -16,6 +16,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
         vectorDrawables {
             useSupportLibrary true
         }
@@ -70,6 +72,8 @@ dependencies {
     implementation compose.foundationLayout
     implementation compose.uiToolingPreview
     implementation compose.constraintLayout
+    androidTestImplementation compose.uiTestJUnit
+    debugImplementation compose.uiTestManifest
 
     implementation coil.img
     implementation coil.svg
@@ -80,4 +84,10 @@ dependencies {
     kapt hiltDependencies.kapt
 
     implementation retrofit.jsonConverter
+
+    androidTestImplementation androidRunner.lib
+    androidTestImplementation androidRules.lib
+    testImplementation mockito.classpath
+    testImplementation jUnit.lib
+    testImplementation coroutinesTest.classpath
 }

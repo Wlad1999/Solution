@@ -5,4 +5,5 @@
     <string name="search_placeholder">Search...</string>
     <string name="empty_item_title">Sorry! No results found...</string>
     <string name="empty_item_description">Please try a different search request or browse businesses from the list</string>
+    <string name="vendor_item_tag">VendorItem</string>
 </resources>

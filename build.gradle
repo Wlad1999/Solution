@@ -47,7 +47,9 @@ buildscript {
                 //Compose tooling RN https://developer.android.com/jetpack/compose/tooling
                 uiToolingPreview: "androidx.compose.ui:ui-tooling-preview:$composeUiVersion",
                 //Constraint layout https://developer.android.com/jetpack/compose/layouts/constraintlayout
-                constraintLayout: "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+                constraintLayout: "androidx.constraintlayout:constraintlayout-compose:1.0.1",
+                uiTestJUnit: "androidx.compose.ui:ui-test-junit4:$composeUiVersion",
+                uiTestManifest: "androidx.compose.ui:ui-test-manifest:$composeUiVersion"
         ]
 
         //Accompanist RN https://github.com/google/accompanist/releases
@@ -68,6 +70,25 @@ buildscript {
         retrofit = [
                 lib          : "com.squareup.retrofit2:retrofit:$retrofitVersion",
                 jsonConverter: "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+        ]
+        androidRunnerVersion = "1.5.0"
+        androidRunner = [
+                lib: "androidx.test:runner:$androidRunnerVersion",
+        ]
+        androidRulesVersion = "1.5.2"
+        androidRules = [
+                lib: "androidx.test:rules:$androidRunnerVersion",
+        ]
+        mockitoVersion = "1.10.19"
+        mockito = [
+                classpath: "org.mockito:mockito-core:$mockitoVersion"
+        ]
+        jUnitVersion = "4.13.2"
+        jUnit = [
+                lib: "junit:junit:$jUnitVersion"
+        ]
+        coroutinesTest = [
+                classpath: "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
         ]
     }
 

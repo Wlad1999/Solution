@@ -7,9 +7,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.youarelaunched.challenge.data.repository.model.Vendor
+import com.youarelaunched.challenge.middle.R
 import com.youarelaunched.challenge.ui.theme.VendorAppTheme
 
 @Composable
@@ -17,8 +21,14 @@ fun VendorItem(
     vendor: Vendor,
     modifier: Modifier = Modifier
 ) {
+    val testTag = stringResource(id = R.string.vendor_item_tag)
+
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .semantics {
+                this.testTag = testTag
+            }
     ) {
         ShopPreview(
             url = vendor.coverPhoto,

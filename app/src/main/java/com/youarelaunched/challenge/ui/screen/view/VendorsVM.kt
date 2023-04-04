@@ -54,5 +54,4 @@ class VendorsVM @Inject constructor(
             }
         }
     }
-
 }
